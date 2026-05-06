@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+
+/* ── Tokens ── */
+:root {
+    --bg:           #1e2d3d;
+    --panel:        #243b4f;
+    --border:       rgba(234,224,200,0.15);
+    --accent:       #7eb8c9;
+    --text:         #eae0c8;
+    --text-muted:   #a0b4c0;
+    --response-bg:  #f7f3ec;
+    --response-text:#1e2d3d;
+    --radius:       14px;
+    --shadow:       0 4px 24px rgba(0,0,0,0.35);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(126,184,201,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 90%, rgba(200,169,110,0.07) 0%, transparent 55%);
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Page heading ── */
+#main-heading { text-align: center; padding: 44px 0 28px; }
+
+h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    padding: 0;
+}
+
+h2 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px 0;
+    padding: 0;
+    text-shadow: none;
+}
+
+/* ── Container ── */
+.container {
+    max-width: 680px;
+    height: auto;
+    margin: 0 auto 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding-bottom: 0;
+    border-radius: 0;
+}
+
+/* Each section sits in its own card */
+.container > form,
+.container > h2,
+.container > .loading-msg,
+.container > .response-box { /* handled via card wrapper below */ }
+
+/* ── Textarea ── */
+.text-area {
+    width: 100%;
+    min-height: 90px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 12px 14px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: block;
+    margin-left: 0;
+    overflow: auto;
+}
+.text-area::placeholder { color: var(--text-muted); }
+.text-area:focus {
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.09);
+}
+
+/* ── Button ── */
+.submit-btn {
+    margin-top: 12px;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    height: 38px;
+    width: 130px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: block;
+}
+.submit-btn:hover  { background: #a0cdd9; }
+.submit-btn:active { transform: scale(0.97); }
+
+/* ── Loading ── */
+.loading-msg {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: left;
+    margin-top: 4px;
+}
+
+/* ── Response box ── */
+.response-box {
+    background: var(--response-bg);
+    color: var(--response-text);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 0.93rem;
+    line-height: 1.75;
+    min-height: 0;
+    width: 100%;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+    margin-top: 4px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+.response-box:empty { display: none; }
+
+/* ── Section cards ── */
+.section-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+hr.divider { display: none; } /* replaced by card gap */

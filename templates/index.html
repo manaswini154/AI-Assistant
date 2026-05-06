@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Personal Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="main-heading"><h1>AI Personal Assistant</h1></div>
+
+    <div class="container">
+
+        <!-- Q&A Section -->
+        <div class="section-card">
+            <h2>Ask me anything</h2>
+            <form id="askform">
+                <div>
+                    <textarea id="ask-textarea" class="text-area" placeholder="Type your question here..." name="question" required></textarea>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </div>
+            </form>
+            <p id="ask-loading" class="loading-msg" style="display:none;">Thinking…</p>
+            <div id="ask-response" class="response-box"></div>
+        </div>
+
+        <!-- Email Section -->
+        <div class="section-card">
+            <h2>Summarise your e-mail</h2>
+            <form id="emailform">
+                <div>
+                    <textarea id="email-textarea" class="text-area" placeholder="Paste your email here…" name="email_text" required></textarea>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </div>
+            </form>
+            <p id="email-loading" class="loading-msg" style="display:none;">Summarising…</p>
+            <div id="email-response" class="response-box"></div>
+        </div>
+
+    </div>
+
+<script>
+    function formatMarkdown(text) {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
+    }
+
+    document.getElementById("askform").onsubmit = async (e) => {
+        e.preventDefault();
+        const loading = document.getElementById("ask-loading");
+        const responseBox = document.getElementById("ask-response");
+        loading.style.display = "block";
+        responseBox.innerHTML = "";
+
+        let response = await fetch("/ask", {
+            method: "POST",
+            body: new FormData(e.target)
+        });
+        let data = await response.json();
+        loading.style.display = "none";
+        responseBox.innerHTML = formatMarkdown(data.response);
+    };
+
+    document.getElementById("emailform").onsubmit = async (e) => {
+        e.preventDefault();
+        const loading = document.getElementById("email-loading");
+        const responseBox = document.getElementById("email-response");
+        loading.style.display = "block";
+        responseBox.innerHTML = "";
+
+        let response = await fetch("/summarise", {
+            method: "POST",
+            body: new FormData(e.target)
+        });
+        let data = await response.json();
+        loading.style.display = "none";
+        responseBox.innerHTML = formatMarkdown(data.response);
+    };
+</script>
+
+</body>
+</html>
